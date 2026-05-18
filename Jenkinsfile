@@ -2,22 +2,21 @@ pipeline {
     agent any
    
     environment{
-        SCANNER_HOME= tool 'sonar-scanner'
+        SCANNER_HOME= tool 'Jenkins-sonar'
     }
 
     stages {
         stage('git-checkout') {
             steps {
-                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/jaiswaladi246/to-do-app.git'
+		git branch: 'main', changelog: false, poll: false, url: 'https://github.com/kotttyaravind/to-do-app.git'
             }
         }
 
     stage('Sonar Analysis') {
             steps {
-                   sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.url=URL_OF_SONARQUBE -Dsonar.login=TOKEN_OF_SONARQUBE -Dsonar.projectName=to-do-app \
-                   -Dsonar.sources=. \
-                   -Dsonar.projectKey=to-do-app '''
-               }
+               
+			sh ''' $SCANNER_HOME/bin/Jenkins-sonar -Dsonar.url=http://35.255.164.147:9000/ -Dsonar.login=squ_b5d6f0da6934c5585333eedcbb58e26bbb7ec1d8 -Dsonar.projectName=to-do-app -Dsonar.projectKey=to-do-app -Dsonar.sources=. '''
+                  }
             }
            
 		stage('OWASP Dependency Check') {
