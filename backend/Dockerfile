@@ -1,4 +1,14 @@
 FROM node:14-alpine3.12
-COPY . .
+
+WORKDIR /app
+
+COPY backend/package.json .
+COPY backend/package-lock.json .
+
+RUN npm install
+
+COPY backend/index.js .
+
 EXPOSE 4000
-CMD ["node","index.js"]
+
+CMD ["node", "index.js"]
