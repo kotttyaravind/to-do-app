@@ -14,7 +14,7 @@ pipeline {
 
         stage('Sonar Analysis') {
             steps {
-                sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.url=http://35.255.164.147:9000/ -Dsonar.login=squ_b5d6f0da6934c5585333eedcbb58e26bbb7ec1d8 -Dsonar.projectName=to-do-app -Dsonar.projectKey=to-do-app -Dsonar.sources=. '''
+                sh ''' /bin/sonar-scanner -Dsonar.url=http://146.148.111.92:9000/ -Dsonar.login=squ_fb6b012e84e402cbd908d7f7f75531161a4da423 -Dsonar.projectName=to-do-app -Dsonar.projectKey=to-do-app -Dsonar.sources=. '''
             }
         }
            
@@ -29,8 +29,8 @@ pipeline {
             steps {
                 script{
                     withDockerRegistry(credentialsId: '9ea0c4b0-721f-4219-be62-48a976dbeec0') {
-                        sh "docker build -t todoapp:latest -f docker/Dockerfile ."
-                        sh "docker tag todoapp:latest kotttyaravind/todoapp:latest"
+                        sh docker build -t todoapp:latest -f docker/Dockerfile .
+                        sh docker tag todoapp:latest kotttyaravind/todoapp:latest
                     }
                 }
             }
@@ -40,7 +40,7 @@ pipeline {
             steps {
                 script{
                     withDockerRegistry(credentialsId: '9ea0c4b0-721f-4219-be62-48a976dbeec0') {
-                        sh "docker push kotttyaravind/todoapp:latest"
+                        sh docker push kotttyaravind/todoapp:latest
                     }
                 }
             }
@@ -48,7 +48,7 @@ pipeline {
 
         stage('Trivy') {
             steps {
-                sh "trivy image kotttyaravind/todoapp:latest"
+                sh trivy image kotttyaravind/todoapp:latest
             }
         }
 
@@ -56,7 +56,7 @@ pipeline {
             steps {
                 script{
                     withDockerRegistry(credentialsId: '9ea0c4b0-721f-4219-be62-48a976dbeec0') {
-                        sh "docker run -d --name to-do-app -p 4000:4000 kotttyaravind/todoapp:latest"
+                        sh docker run -d --name to-do-app -p 4000:4000 kotttyaravind/todoapp:latest
                     }
                 }
             }
