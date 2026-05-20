@@ -14,7 +14,7 @@ pipeline {
 
         stage('Sonar Analysis') {
             steps {
-                sh ''' /bin/sonar-scanner -Dsonar.url=http://146.148.111.92:9000/ -Dsonar.login=squ_fb6b012e84e402cbd908d7f7f75531161a4da423 -Dsonar.projectName=to-do-app -Dsonar.projectKey=to-do-app -Dsonar.sources=. '''
+                sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.host.url=http://146.148.111.92:9000/ -Dsonar.login=squ_fb6b012e84e402cbd908d7f7f75531161a4da423 -Dsonar.projectName=to-do-app -Dsonar.projectKey=to-do-app -Dsonar.sources=. '''
             }
         }
            
