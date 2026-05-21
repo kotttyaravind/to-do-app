@@ -131,7 +131,11 @@ const strokeColor = completed
 function App() {
   const [taskName, setTaskName] = useState('')
   const [tasks, setTasks] = useState({})
-  const [completed, setCompleted] = useState({})
+  const [completed, setCompleted] = useState(() => {
+  try {
+    return JSON.parse(localStorage.getItem('completedTasks')) || {}
+  } catch { return {} }
+})
   const [positions, setPositions] = useState({})
   const [entering, setEntering] = useState({})
   const dragging = useRef(null)
