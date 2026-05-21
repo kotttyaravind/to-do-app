@@ -43,7 +43,7 @@ steps {
 script {
 sh 'docker rm -f to-do-app || true'
 
-        sh 'docker run -d --name to-do-app -p 4000:4000 kotttyaravind/todoapp:latest'
+        sh 'docker run -d --name to-do-app -p 4000:4000 aravindkotty/todoapp:latest'
     }
 }
 
