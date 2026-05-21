@@ -62,7 +62,7 @@ const strokeColor = completed
             <feComposite in="SourceGraphic" in2="offsetBlur" operator="over"/>
           </filter>
           <linearGradient id={`grad-${id}`} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="rgba(255,255,255,0.95)"/>
+            <stop offset="0%" stopColor="rgba(255,220,220,0.95)"/>
             <stop offset="100%" stopColor={fillColor}/>
           </linearGradient>
         </defs>
