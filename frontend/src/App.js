@@ -151,24 +151,30 @@ function App() {
     })()
   }, [])
 
-  useEffect(() => {
+useEffect(() => {
     const onUp = () => { dragging.current = null }
     const onMove = (e) => {
       if (!dragging.current) return
       const { id, startX, startY } = dragging.current
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY
       setPositions(prev => ({
         ...prev,
         [id]: {
-          x: Math.max(0, Math.min(window.innerWidth - 300, e.clientX - startX)),
-          y: Math.max(70, Math.min(window.innerHeight - 200, e.clientY - startY)),
+          x: Math.max(0, Math.min(window.innerWidth - 300, clientX - startX)),
+          y: Math.max(70, Math.min(window.innerHeight - 200, clientY - startY)),
         }
       }))
     }
     window.addEventListener('mouseup', onUp)
     window.addEventListener('mousemove', onMove)
+    window.addEventListener('touchend', onUp)
+    window.addEventListener('touchmove', onMove, { passive: true })
     return () => {
       window.removeEventListener('mouseup', onUp)
       window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('touchend', onUp)
+      window.removeEventListener('touchmove', onMove)
     }
   }, [])
 
