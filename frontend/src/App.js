@@ -157,21 +157,30 @@ function App() {
 useEffect(() => {
     const onUp = () => { dragging.current = null }
     const onMove = (e) => {
-      if (!dragging.current) return
-      const { id, startX, startY } = dragging.current
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY
-      setPositions(prev => ({
-        ...prev,
-        [id]: {
-          const isMobile = window.innerWidth <= 768
-const w = isMobile ? 160 : 300
-const h = isMobile ? 120 : 200
-x: Math.max(0, Math.min(window.innerWidth - w, clientX - startX)),
-y: Math.max(58, Math.min(window.innerHeight - h - 110, clientY - startY)),
-        }
-      }))
+  if (!dragging.current) return
+
+  const { id, startX, startY } = dragging.current
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY
+
+  const isMobile = window.innerWidth <= 768
+  const w = isMobile ? 160 : 300
+  const h = isMobile ? 120 : 200
+
+  setPositions(prev => ({
+    ...prev,
+    [id]: {
+      x: Math.max(
+        0,
+        Math.min(window.innerWidth - w, clientX - startX)
+      ),
+      y: Math.max(
+        58,
+        Math.min(window.innerHeight - h - 110, clientY - startY)
+      ),
     }
+  }))
+}
     window.addEventListener('mouseup', onUp)
     window.addEventListener('mousemove', onMove)
     window.addEventListener('touchend', onUp)
