@@ -4,9 +4,12 @@ import { getTasks, deleteTask, postTask } from './apis';
 import './App.css';
 
 function randomPos() {
+  const isMobile = window.innerWidth <= 768
+  const w = isMobile ? 160 : 280
+  const h = isMobile ? 120 : 210
   return {
-    x: Math.random() * (window.innerWidth - 300),
-    y: Math.random() * (window.innerHeight - 300) + 80,
+    x: Math.random() * (window.innerWidth - w),
+    y: Math.random() * (window.innerHeight - h - 120) + 60,
   }
 }
 
