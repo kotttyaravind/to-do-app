@@ -19,7 +19,7 @@ pipeline {
                 script {
                     withDockerRegistry(credentialsId: 'a54ef4f7-243c-48d4-9c68-6fd84c15775c') {
                         sh "docker build -t todoapp:latest -f backend/Dockerfile ."
-                        sh "docker tag todoapp:latest kotttyaravind/todoapp:latest"
+                        sh "docker tag todoapp:latest aravindkotty/todoapp:latest"
                     }
                 }
             }
@@ -28,14 +28,14 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'a54ef4f7-243c-48d4-9c68-6fd84c15775c') {
-                        sh "docker push kotttyaravind/todoapp:latest"
+                        sh "docker push aravindkotty/todoapp:latest"
                     }
                 }
             }
         }
         stage('Trivy') {
             steps {
-                sh "trivy image kotttyaravind/todoapp:latest"
+                sh "trivy image aravindkotty/todoapp:latest"
             }
         }
         stage('Deploy to Docker') {
