@@ -195,9 +195,13 @@ function App() {
   }
 
   const handleComplete = (task_id) => {
-    playPop('complete')
-    setCompleted(prev => ({ ...prev, [task_id]: !prev[task_id] }))
-  }
+  playPop('complete')
+  setCompleted(prev => {
+    const updated = { ...prev, [task_id]: !prev[task_id] }
+    localStorage.setItem('completedTasks', JSON.stringify(updated))
+    return updated
+  })
+}
 
   const onMouseDown = (e, id) => {
     e.preventDefault()
