@@ -237,8 +237,11 @@ body {
 /* ── Mobile Responsive ── */
 @media (max-width: 768px) {
 
-  body {
+body {
     overflow: hidden;
+  }
+
+  .cloud {
     touch-action: none;
   }
 
