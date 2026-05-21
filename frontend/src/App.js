@@ -37,12 +37,12 @@ function playPop(type = 'create') {
 }
 
 function CloudBubble({ id, task, completed, entering, position, onMouseDown, onComplete, onDelete }) {
-  const fillColor = completed
-    ? 'rgba(200,240,215,0.82)'
-    : 'rgba(232,235,240,0.82)'
-  const strokeColor = completed
-    ? 'rgba(100,200,140,0.7)'
-    : 'rgba(255,255,255,0.9)'
+const fillColor = completed
+  ? 'rgba(60,180,90,0.75)'
+  : 'rgba(255,200,200,0.82)'
+const strokeColor = completed
+  ? 'rgba(30,140,60,0.85)'
+  : 'rgba(255,150,150,0.6)'
 
   return (
     <div
