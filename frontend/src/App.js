@@ -5,8 +5,8 @@ import './App.css';
 
 function randomPos() {
   return {
-    x: Math.random() * (window.innerWidth - 260),
-    y: Math.random() * (window.innerHeight - 260) + 80,
+    x: Math.random() * (window.innerWidth - 300),
+    y: Math.random() * (window.innerHeight - 300) + 80,
   }
 }
 
@@ -16,7 +16,6 @@ function playPop(type = 'create') {
   const gain = ctx.createGain()
   osc.connect(gain)
   gain.connect(ctx.destination)
-
   if (type === 'create') {
     osc.frequency.setValueAtTime(520, ctx.currentTime)
     osc.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 0.18)
@@ -33,30 +32,96 @@ function playPop(type = 'create') {
     gain.gain.setValueAtTime(0.4, ctx.currentTime)
     gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25)
   }
-
   osc.start(ctx.currentTime)
   osc.stop(ctx.currentTime + 0.3)
 }
 
 function CloudBubble({ id, task, completed, entering, position, onMouseDown, onComplete, onDelete }) {
+  const fillColor = completed
+    ? 'rgba(200,240,215,0.82)'
+    : 'rgba(232,235,240,0.82)'
+  const strokeColor = completed
+    ? 'rgba(100,200,140,0.7)'
+    : 'rgba(255,255,255,0.9)'
+
   return (
     <div
       className={`cloud ${completed ? 'done' : ''} ${entering ? 'entering' : ''}`}
       style={{ left: position.x, top: position.y }}
       onMouseDown={(e) => onMouseDown(e, id)}
     >
-      <div className="cloudShape">
-        <div className="cloudBody">
-          <p className="cloudText">
-            {completed && <span>✅ </span>}
-            {task.taskName}
-          </p>
-          <div className="cloudButtons">
-            <button className="completeButton" onClick={() => onComplete(id)}>
-              {completed ? 'Undo' : 'Done'}
-            </button>
-            <button className="deleteButton" onClick={() => onDelete(id)}>🗑</button>
-          </div>
+      <svg
+        viewBox="0 0 200 150"
+        xmlns="http://www.w3.org/2000/svg"
+        className="cloudSvg"
+      >
+        <defs>
+          <filter id={`glass-${id}`} x="-10%" y="-10%" width="120%" height="120%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur"/>
+            <feOffset dx="0" dy="3" result="offsetBlur"/>
+            <feComposite in="SourceGraphic" in2="offsetBlur" operator="over"/>
+          </filter>
+          <linearGradient id={`grad-${id}`} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="rgba(255,255,255,0.95)"/>
+            <stop offset="100%" stopColor={fillColor}/>
+          </linearGradient>
+        </defs>
+
+        {/* Main cloud path - organic bumpy shape like the image */}
+        <path
+          d="
+            M 100,130
+            C 70,130 45,125 35,112
+            C 20,112 8,100 8,86
+            C 8,76 14,68 23,64
+            C 20,58 20,50 25,44
+            C 30,36 40,32 50,34
+            C 52,24 60,16 72,14
+            C 82,12 92,16 98,24
+            C 104,16 114,12 125,15
+            C 137,18 145,28 144,40
+            C 152,38 162,44 165,54
+            C 168,62 164,72 157,77
+            C 166,82 172,92 170,103
+            C 168,116 156,124 143,125
+            C 135,128 118,130 100,130 Z
+          "
+          fill={`url(#grad-${id})`}
+          stroke={strokeColor}
+          strokeWidth="2"
+          filter={`url(#glass-${id})`}
+          style={{backdropFilter: 'blur(12px)'}}
+        />
+
+        {/* Shine highlight */}
+        <path
+          d="M 55,30 C 65,20 85,18 95,26"
+          fill="none"
+          stroke="rgba(255,255,255,0.9)"
+          strokeWidth="3"
+          strokeLinecap="round"
+        />
+
+        {/* Little tail like speech bubble */}
+        <path
+          d="M 130,128 C 138,138 148,142 145,130"
+          fill={fillColor}
+          stroke={strokeColor}
+          strokeWidth="1.5"
+        />
+      </svg>
+
+      {/* Content overlaid on SVG */}
+      <div className="cloudContent">
+        <p className="cloudText">
+          {completed && <span>✅ </span>}
+          {task.taskName}
+        </p>
+        <div className="cloudButtons">
+          <button className="completeButton" onClick={() => onComplete(id)}>
+            {completed ? 'Undo' : 'Done'}
+          </button>
+          <button className="deleteButton" onClick={() => onDelete(id)}>🗑</button>
         </div>
       </div>
     </div>
@@ -89,7 +154,7 @@ function App() {
       setPositions(prev => ({
         ...prev,
         [id]: {
-          x: Math.max(0, Math.min(window.innerWidth - 260, e.clientX - startX)),
+          x: Math.max(0, Math.min(window.innerWidth - 300, e.clientX - startX)),
           y: Math.max(70, Math.min(window.innerHeight - 200, e.clientY - startY)),
         }
       }))
