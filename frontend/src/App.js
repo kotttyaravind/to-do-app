@@ -212,31 +212,32 @@ function App() {
     }
   }
 
-  return (
+return (
     <div className="main">
       <header className="title">
         <h1>☁️ Todo Application</h1>
       </header>
 
-      {Object.keys(tasks).length === 0 &&
-        <h2 className='noTasks'>No tasks yet. Add one below! 🌤️</h2>
-      }
-
-      {Object.keys(tasks).map((item) => (
-        positions[item] && (
-          <CloudBubble
-            key={item}
-            id={item}
-            task={tasks[item]}
-            completed={completed[item]}
-            entering={entering[item]}
-            position={positions[item]}
-            onMouseDown={onMouseDown}
-            onComplete={handleComplete}
-            onDelete={handleDelete}
-          />
-        )
-      ))}
+      <div className="bubblesContainer">
+        {Object.keys(tasks).length === 0 &&
+          <h2 className='noTasks'>No tasks yet. Add one below! 🌤️</h2>
+        }
+        {Object.keys(tasks).map((item) => (
+          positions[item] && (
+            <CloudBubble
+              key={item}
+              id={item}
+              task={tasks[item]}
+              completed={completed[item]}
+              entering={entering[item]}
+              position={positions[item]}
+              onMouseDown={onMouseDown}
+              onComplete={handleComplete}
+              onDelete={handleDelete}
+            />
+          )
+        ))}
+      </div>
 
       <div className='taskInputContainer'>
         <h3>✏️ Add New Task</h3>
@@ -256,6 +257,5 @@ function App() {
       </div>
     </div>
   )
-}
 
 export default App;
