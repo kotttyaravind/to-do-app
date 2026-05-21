@@ -13,7 +13,6 @@ body {
   position: relative;
 }
 
-/* ── Header ── */
 .title {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -23,8 +22,7 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 200;
-  box-shadow:
-    0 4px 12px rgba(0,0,0,0.35),
+  box-shadow: 0 4px 12px rgba(0,0,0,0.35),
     inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
@@ -35,28 +33,121 @@ body {
   font-weight: 300;
 }
 
-/* ── Input bar ── */
+/* Cloud wrapper */
+.cloud {
+  position: absolute;
+  width: 280px;
+  height: 210px;
+  cursor: grab;
+  z-index: 10;
+  user-select: none;
+  animation: bob 5s ease-in-out infinite;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.2))
+          drop-shadow(0 2px 6px rgba(0,0,0,0.12));
+  transition: filter 0.2s;
+}
+
+.cloud:active { cursor: grabbing; }
+
+.cloud:hover {
+  filter: drop-shadow(0 12px 28px rgba(0,0,0,0.25))
+          drop-shadow(0 3px 8px rgba(0,0,0,0.15));
+}
+
+.cloudSvg {
+  width: 280px;
+  height: 210px;
+  position: absolute;
+  top: 0; left: 0;
+}
+
+/* Content sits on top of SVG */
+.cloudContent {
+  position: absolute;
+  top: 28px;
+  left: 30px;
+  width: 220px;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.cloudButtons {
+  display: flex;
+  gap: 8px;
+  pointer-events: all;
+}
+
+.cloudText {
+  color: #333;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.4;
+  word-break: break-word;
+  max-width: 180px;
+}
+
+.cloud.done .cloudText {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.completeButton {
+  padding: 5px 12px;
+  background: rgba(60,180,120,0.8);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.6);
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  pointer-events: all;
+  transition: background 0.2s, transform 0.1s;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset;
+}
+
+.completeButton:hover { background: rgba(40,160,100,0.9); transform: scale(1.05); }
+
+.deleteButton {
+  padding: 5px 12px;
+  background: rgba(220,80,80,0.75);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.5);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  pointer-events: all;
+  transition: background 0.2s, transform 0.1s;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.3) inset;
+}
+
+.deleteButton:hover { background: rgba(200,50,50,0.9); transform: scale(1.05); }
+
+/* Input bar */
 .taskInputContainer {
   position: fixed;
   bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
   width: 460px;
-  background: rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.5);
   backdrop-filter: blur(18px) saturate(180%);
   -webkit-backdrop-filter: blur(18px) saturate(180%);
-  border: 1px solid rgba(255,255,255,0.75);
+  border: 1px solid rgba(255,255,255,0.8);
   border-radius: 22px;
   padding: 16px 22px;
   z-index: 200;
-  box-shadow:
-    0 8px 32px rgba(0,0,0,0.18),
-    0 1.5px 0 rgba(255,255,255,0.9) inset,
-    0 -1px 0 rgba(0,0,0,0.08) inset;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15),
+    0 1.5px 0 rgba(255,255,255,0.9) inset;
 }
 
 .taskInputContainer h3 {
-  color: #444;
+  color: #555;
   font-size: 0.85rem;
   font-weight: 500;
   margin-bottom: 10px;
@@ -71,20 +162,21 @@ body {
   padding: 10px 14px;
   border-radius: 14px;
   border: 1.5px solid rgba(180,180,180,0.6);
-  background: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.65);
   color: #333;
   font-size: 0.95rem;
   outline: none;
   transition: border 0.2s, box-shadow 0.2s;
-  box-shadow: inset 0 2px 6px rgba(0,0,0,0.07);
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.06);
 }
 
 .inputBox:focus {
   border-color: #888;
-  box-shadow: inset 0 2px 6px rgba(0,0,0,0.1), 0 0 0 3px rgba(150,150,150,0.15);
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.08),
+    0 0 0 3px rgba(150,150,150,0.12);
 }
 
-.inputBox::placeholder { color: #aaa; }
+.inputBox::placeholder { color: #bbb; }
 
 .addButton {
   padding: 10px 22px;
@@ -111,176 +203,18 @@ body {
   letter-spacing: 1px;
 }
 
-/* ── Cloud shape ── */
-.cloud {
-  position: absolute;
-  width: 220px;
-  cursor: grab;
-  z-index: 10;
-  user-select: none;
-  filter:
-    drop-shadow(0 6px 16px rgba(0,0,0,0.18))
-    drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-  transition: filter 0.2s;
-}
-
-.cloud:active { cursor: grabbing; }
-
-.cloud:hover {
-  filter:
-    drop-shadow(0 10px 24px rgba(0,0,0,0.22))
-    drop-shadow(0 3px 6px rgba(0,0,0,0.12));
-}
-
-/* SVG cloud silhouette via clip-path approximation using border-radius bumps */
-.cloudShape {
-  position: relative;
-  width: 220px;
-}
-
-.cloudShape::before,
-.cloudShape::after,
-.cloudBody::before,
-.cloudBody::after {
-  content: '';
-  position: absolute;
-  background: inherit;
-  border-radius: 50%;
-}
-
-.cloudBody {
-  position: relative;
-  width: 180px;
-  height: 90px;
-  margin: 40px auto 0;
-  background: rgba(235,237,240,0.72);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border-radius: 45px;
-  border: 1.5px solid rgba(255,255,255,0.85);
-  box-shadow:
-    0 2px 0 rgba(255,255,255,0.95) inset,
-    0 -1px 0 rgba(0,0,0,0.06) inset,
-    4px 4px 0 rgba(0,0,0,0.04);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 14px;
-  gap: 8px;
-}
-
-/* Cloud bumps */
-.cloudBody::before {
-  width: 90px;
-  height: 90px;
-  top: -45px;
-  left: 25px;
-  background: rgba(235,237,240,0.72);
-  backdrop-filter: blur(20px);
-  border: 1.5px solid rgba(255,255,255,0.85);
-  box-shadow: 0 2px 0 rgba(255,255,255,0.95) inset;
-}
-
-.cloudBody::after {
-  width: 65px;
-  height: 65px;
-  top: -30px;
-  left: 90px;
-  background: rgba(235,237,240,0.72);
-  backdrop-filter: blur(20px);
-  border: 1.5px solid rgba(255,255,255,0.85);
-  box-shadow: 0 2px 0 rgba(255,255,255,0.95) inset;
-}
-
-/* Completed cloud — soft green tint */
-.cloud.done .cloudBody,
-.cloud.done .cloudBody::before,
-.cloud.done .cloudBody::after {
-  background: rgba(200, 240, 220, 0.75);
-  border-color: rgba(255,255,255,0.9);
-}
-
-/* Pop-in animation */
-.cloud.entering .cloudBody,
-.cloud.entering .cloudBody::before,
-.cloud.entering .cloudBody::after {
+/* Animations */
+.cloud.entering {
   animation: cloudPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
-/* Gentle bob */
-.cloudBody {
-  animation: bob 5s ease-in-out infinite;
-}
-
-.cloudText {
-  color: #333;
-  font-size: 0.8rem;
-  text-align: center;
-  line-height: 1.4;
-  word-break: break-word;
-  font-weight: 500;
-  position: relative;
-  z-index: 2;
-}
-
-.cloud.done .cloudText {
-  text-decoration: line-through;
-  color: #888;
-}
-
-.cloudButtons {
-  display: flex;
-  gap: 6px;
-  position: relative;
-  z-index: 2;
-}
-
-.completeButton {
-  padding: 4px 10px;
-  background: rgba(60,180,120,0.75);
-  backdrop-filter: blur(6px);
-  color: white;
-  border: 1px solid rgba(255,255,255,0.5);
-  border-radius: 20px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
-  box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset;
-}
-
-.completeButton:hover {
-  background: rgba(40,160,100,0.85);
-  transform: scale(1.05);
-}
-
-.deleteButton {
-  padding: 4px 10px;
-  background: rgba(220,80,80,0.7);
-  backdrop-filter: blur(6px);
-  color: white;
-  border: 1px solid rgba(255,255,255,0.4);
-  border-radius: 20px;
-  font-size: 0.75rem;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
-  box-shadow: 0 1px 0 rgba(255,255,255,0.3) inset;
-}
-
-.deleteButton:hover {
-  background: rgba(200,50,50,0.85);
-  transform: scale(1.05);
-}
-
-/* ── Keyframes ── */
 @keyframes cloudPop {
   0%   { transform: scale(0) rotate(-8deg); opacity: 0; }
-  65%  { transform: scale(1.12) rotate(2deg); opacity: 1; }
+  65%  { transform: scale(1.1) rotate(2deg); opacity: 1; }
   100% { transform: scale(1) rotate(0deg); opacity: 1; }
 }
 
 @keyframes bob {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-8px); }
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
 }
