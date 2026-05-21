@@ -49,6 +49,7 @@ const strokeColor = completed
       className={`cloud ${completed ? 'done' : ''} ${entering ? 'entering' : ''}`}
       style={{ left: position.x, top: position.y }}
       onMouseDown={(e) => onMouseDown(e, id)}
+      onTouchStart={(e) => onMouseDown(e.touches[0], id)}
     >
       <svg
         viewBox="0 0 200 150"
