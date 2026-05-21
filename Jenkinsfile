@@ -9,7 +9,7 @@ pipeline {
                 git branch: 'main', changelog: false, poll: false, url: 'https://github.com/kotttyaravind/to-do-app.git'
             }
         }
-        
+
         stage('Docker Build') {
             steps {
                 script {
@@ -20,6 +20,7 @@ pipeline {
                 }
             }
         }
+
         stage('Docker Push') {
             steps {
                 script {
@@ -29,20 +30,20 @@ pipeline {
                 }
             }
         }
+
         stage('Trivy') {
             steps {
                 sh "trivy image aravindkotty/todoapp:latest"
             }
         }
+
         stage('Deploy to Docker') {
-steps {
-script {
-sh 'docker rm -f to-do-app || true'
-
-        sh 'docker run -d --name to-do-app -p 4000:4000 aravindkotty/todoapp:latest'
-    }
-}
-
-}
+            steps {
+                script {
+                    sh 'docker rm -f to-do-app || true'
+                    sh 'docker run -d --name to-do-app -p 4000:4000 -v todo-data:/app/data --restart always aravindkotty/todoapp:latest'
+                }
+            }
+        }
     }
 }
