@@ -220,81 +220,89 @@ body {
 }
 
 
-
-
 /* ── Mobile Responsive ── */
 @media (max-width: 768px) {
 
+  body {
+    overflow: hidden;
+  }
+
+  .title {
+    height: 50px;
+  }
+
   .title h1 {
-    font-size: 1.1rem;
+    font-size: 1rem;
     letter-spacing: 1px;
   }
 
-  /* Stack bubbles vertically instead of floating */
+  .main {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  /* Scrollable bubble container */
+  .bubblesContainer {
+    position: fixed;
+    top: 50px;
+    bottom: 110px;
+    left: 0;
+    right: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 12px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .cloud {
     position: relative !important;
     left: auto !important;
     top: auto !important;
-    width: 85vw;
-    height: auto;
-    margin: 10px auto;
+    width: 80vw;
+    height: 130px;
+    margin: 0;
     animation: none;
+    flex-shrink: 0;
+    cursor: default;
   }
 
   .cloudSvg {
-    width: 85vw;
-    height: auto;
-    min-height: 180px;
+    width: 80vw;
+    height: 130px;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 
   .cloudContent {
-    position: relative;
-    top: auto;
-    left: auto;
-    width: 100%;
-    height: auto;
-    padding: 20px 16px;
+    position: absolute;
+    top: 12px;
+    left: 10px;
+    width: calc(80vw - 20px);
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 12px;
   }
 
   .cloudText {
-    font-size: 0.95rem;
+    font-size: 0.82rem;
     max-width: 100%;
-  }
-
-  /* Scrollable area for bubbles */
-  .main {
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 70px 0 140px 0;
-    height: auto;
-    min-height: 100vh;
-  }
-
-  /* Input bar full width on mobile */
-  .taskInputContainer {
-    width: 92vw;
-    bottom: 12px;
-    padding: 12px 16px;
-    border-radius: 18px;
-  }
-
-  .taskInputContainer h3 {
-    font-size: 0.8rem;
-  }
-
-  .inputBox {
-    font-size: 0.9rem;
-    padding: 10px 12px;
-  }
-
-  .addButton {
-    padding: 10px 16px;
-    font-size: 0.9rem;
+    line-height: 1.3;
   }
 
   .completeButton, .deleteButton {
-    padding: 6px 14px;
-    font-size: 0.78rem;
+    padding: 5px 12px;
+    font-size: 0.72rem;
   }
 
   .noTasks {
@@ -305,5 +313,32 @@ body {
     text-align: center;
     margin-top: 40px;
     font-size: 1rem;
+  }
+
+  /* Input bar */
+  .taskInputContainer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    border-radius: 18px 18px 0 0;
+    padding: 12px 16px 24px;
+    transform: none;
+  }
+
+  .taskInputContainer h3 {
+    font-size: 0.78rem;
+    margin-bottom: 8px;
+  }
+
+  .inputBox {
+    font-size: 0.9rem;
+    padding: 9px 12px;
+  }
+
+  .addButton {
+    padding: 9px 16px;
+    font-size: 0.88rem;
   }
 }
