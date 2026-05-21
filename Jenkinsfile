@@ -39,13 +39,14 @@ pipeline {
             }
         }
         stage('Deploy to Docker') {
-            steps {
-                script {
-                    withDockerRegistry(credentialsId: 'a54ef4f7-243c-48d4-9c68-6fd84c15775c') {
-                        sh "docker run -d --name to-do-app -p 4000:4000 kotttyaravind/todoapp:latest"
-                    }
-                }
-            }
-        }
+steps {
+script {
+sh 'docker rm -f to-do-app || true'
+
+        sh 'docker run -d --name to-do-app -p 4000:4000 kotttyaravind/todoapp:latest'
+    }
+}
+
+}
     }
 }
