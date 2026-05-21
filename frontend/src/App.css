@@ -1,30 +1,10 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background: radial-gradient(ellipse at top, #0d0d2b, #000010);
+  background: #dde1e7;
   min-height: 100vh;
   font-family: 'Segoe UI', sans-serif;
   overflow: hidden;
-}
-
-/* Starfield effect */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image:
-    radial-gradient(1px 1px at 10% 20%, white, transparent),
-    radial-gradient(1px 1px at 30% 60%, white, transparent),
-    radial-gradient(1px 1px at 50% 10%, white, transparent),
-    radial-gradient(1px 1px at 70% 80%, white, transparent),
-    radial-gradient(1px 1px at 90% 40%, white, transparent),
-    radial-gradient(1px 1px at 20% 90%, white, transparent),
-    radial-gradient(1px 1px at 60% 50%, white, transparent),
-    radial-gradient(1px 1px at 80% 15%, white, transparent),
-    radial-gradient(1px 1px at 45% 75%, white, transparent),
-    radial-gradient(1px 1px at 15% 45%, white, transparent);
-  opacity: 0.6;
-  pointer-events: none;
 }
 
 .main {
@@ -33,198 +13,274 @@ body::before {
   position: relative;
 }
 
+/* ── Header ── */
 .title {
   position: fixed;
   top: 0; left: 0; right: 0;
-  background: linear-gradient(90deg, #7400b8, #6930c3, #5e60ce, #48bfe3);
-  padding: 14px 20px;
-  text-align: center;
-  z-index: 100;
-  box-shadow: 0 2px 20px rgba(116, 0, 184, 0.5);
+  height: 58px;
+  background: #2b2d2f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
 .title h1 {
-  color: white;
-  font-size: 1.6rem;
-  letter-spacing: 2px;
+  color: #e8eaed;
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+  font-weight: 300;
 }
 
+/* ── Input bar ── */
 .taskInputContainer {
   position: fixed;
   bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(255,255,255,0.07);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 20px;
-  padding: 18px 24px;
-  z-index: 100;
-  width: 480px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  width: 460px;
+  background: rgba(255,255,255,0.45);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.75);
+  border-radius: 22px;
+  padding: 16px 22px;
+  z-index: 200;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.18),
+    0 1.5px 0 rgba(255,255,255,0.9) inset,
+    0 -1px 0 rgba(0,0,0,0.08) inset;
 }
 
 .taskInputContainer h3 {
-  color: #48bfe3;
+  color: #444;
+  font-size: 0.85rem;
+  font-weight: 500;
   margin-bottom: 10px;
-  font-size: 0.95rem;
   text-align: center;
+  letter-spacing: 1px;
 }
 
-.taskInput {
-  display: flex;
-  gap: 10px;
-}
+.taskInput { display: flex; gap: 10px; }
 
 .inputBox {
   flex: 1;
   padding: 10px 14px;
-  border-radius: 12px;
-  border: 2px solid #5e60ce;
-  background: rgba(255,255,255,0.08);
-  color: white;
+  border-radius: 14px;
+  border: 1.5px solid rgba(180,180,180,0.6);
+  background: rgba(255,255,255,0.6);
+  color: #333;
   font-size: 0.95rem;
   outline: none;
-  transition: border 0.2s;
+  transition: border 0.2s, box-shadow 0.2s;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.07);
 }
 
-.inputBox:focus { border-color: #48bfe3; }
-.inputBox::placeholder { color: rgba(255,255,255,0.35); }
+.inputBox:focus {
+  border-color: #888;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.1), 0 0 0 3px rgba(150,150,150,0.15);
+}
+
+.inputBox::placeholder { color: #aaa; }
 
 .addButton {
   padding: 10px 22px;
-  background: linear-gradient(135deg, #6930c3, #48bfe3);
-  color: white;
+  background: #3a3a3a;
+  color: #f0f0f0;
   border: none;
-  border-radius: 12px;
-  font-weight: bold;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 0.95rem;
   cursor: pointer;
-  transition: transform 0.1s, opacity 0.2s;
+  transition: background 0.2s, transform 0.1s;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
 }
 
-.addButton:hover { opacity: 0.85; transform: scale(1.04); }
+.addButton:hover { background: #555; transform: scale(1.03); }
 
 .noTasks {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  color: rgba(255,255,255,0.3);
-  font-size: 1.2rem;
-  text-align: center;
+  color: #aaa;
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: 1px;
 }
 
-/* Floating Bubbles */
-.bubble {
+/* ── Cloud shape ── */
+.cloud {
   position: absolute;
-  width: 200px;
+  width: 220px;
   cursor: grab;
-  animation: floatIn 0.5s ease forwards;
   z-index: 10;
   user-select: none;
+  filter:
+    drop-shadow(0 6px 16px rgba(0,0,0,0.18))
+    drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  transition: filter 0.2s;
 }
 
-.bubble:active { cursor: grabbing; }
+.cloud:active { cursor: grabbing; }
 
-.bubble.entering {
-  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+.cloud:hover {
+  filter:
+    drop-shadow(0 10px 24px rgba(0,0,0,0.22))
+    drop-shadow(0 3px 6px rgba(0,0,0,0.12));
 }
 
-.bubbleInner {
-  background: radial-gradient(circle at 30% 30%,
-    rgba(255,255,255,0.25),
-    rgba(100, 60, 200, 0.3) 60%,
-    rgba(72, 191, 227, 0.2));
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.3);
+/* SVG cloud silhouette via clip-path approximation using border-radius bumps */
+.cloudShape {
+  position: relative;
+  width: 220px;
+}
+
+.cloudShape::before,
+.cloudShape::after,
+.cloudBody::before,
+.cloudBody::after {
+  content: '';
+  position: absolute;
+  background: inherit;
   border-radius: 50%;
-  width: 200px;
-  height: 200px;
+}
+
+.cloudBody {
+  position: relative;
+  width: 180px;
+  height: 90px;
+  margin: 40px auto 0;
+  background: rgba(235,237,240,0.72);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-radius: 45px;
+  border: 1.5px solid rgba(255,255,255,0.85);
+  box-shadow:
+    0 2px 0 rgba(255,255,255,0.95) inset,
+    0 -1px 0 rgba(0,0,0,0.06) inset,
+    4px 4px 0 rgba(0,0,0,0.04);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  box-shadow:
-    0 8px 32px rgba(116, 0, 184, 0.3),
-    inset 0 1px 0 rgba(255,255,255,0.4);
-  transition: transform 0.2s, box-shadow 0.2s;
-  animation: bob 4s ease-in-out infinite;
+  padding: 10px 14px;
+  gap: 8px;
 }
 
-.bubble:hover .bubbleInner {
-  transform: scale(1.06);
-  box-shadow: 0 12px 40px rgba(116, 0, 184, 0.5),
-    inset 0 1px 0 rgba(255,255,255,0.4);
+/* Cloud bumps */
+.cloudBody::before {
+  width: 90px;
+  height: 90px;
+  top: -45px;
+  left: 25px;
+  background: rgba(235,237,240,0.72);
+  backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(255,255,255,0.85);
+  box-shadow: 0 2px 0 rgba(255,255,255,0.95) inset;
 }
 
-.bubble.done .bubbleInner {
-  background: radial-gradient(circle at 30% 30%,
-    rgba(255,255,255,0.2),
-    rgba(6, 214, 160, 0.3) 60%,
-    rgba(0, 180, 100, 0.2));
-  border-color: rgba(6, 214, 160, 0.5);
+.cloudBody::after {
+  width: 65px;
+  height: 65px;
+  top: -30px;
+  left: 90px;
+  background: rgba(235,237,240,0.72);
+  backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(255,255,255,0.85);
+  box-shadow: 0 2px 0 rgba(255,255,255,0.95) inset;
 }
 
-.bubbleText {
-  color: white;
-  font-size: 0.85rem;
+/* Completed cloud — soft green tint */
+.cloud.done .cloudBody,
+.cloud.done .cloudBody::before,
+.cloud.done .cloudBody::after {
+  background: rgba(200, 240, 220, 0.75);
+  border-color: rgba(255,255,255,0.9);
+}
+
+/* Pop-in animation */
+.cloud.entering .cloudBody,
+.cloud.entering .cloudBody::before,
+.cloud.entering .cloudBody::after {
+  animation: cloudPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Gentle bob */
+.cloudBody {
+  animation: bob 5s ease-in-out infinite;
+}
+
+.cloudText {
+  color: #333;
+  font-size: 0.8rem;
   text-align: center;
-  margin-bottom: 10px;
+  line-height: 1.4;
   word-break: break-word;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  font-weight: 500;
+  position: relative;
+  z-index: 2;
 }
 
-.bubble.done .bubbleText {
+.cloud.done .cloudText {
   text-decoration: line-through;
-  color: rgba(255,255,255,0.6);
+  color: #888;
 }
 
-.bubbleButtons {
+.cloudButtons {
   display: flex;
   gap: 6px;
+  position: relative;
+  z-index: 2;
 }
 
 .completeButton {
-  padding: 5px 10px;
-  background: linear-gradient(135deg, #06d6a0, #00b4d8);
-  color: #0d0d2b;
-  border: none;
+  padding: 4px 10px;
+  background: rgba(60,180,120,0.75);
+  backdrop-filter: blur(6px);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.5);
   border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: bold;
+  font-size: 0.7rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: background 0.2s, transform 0.1s;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset;
 }
 
-.completeButton:hover { opacity: 0.8; }
+.completeButton:hover {
+  background: rgba(40,160,100,0.85);
+  transform: scale(1.05);
+}
 
 .deleteButton {
-  padding: 5px 10px;
-  background: linear-gradient(135deg, #ef476f, #f72585);
+  padding: 4px 10px;
+  background: rgba(220,80,80,0.7);
+  backdrop-filter: blur(6px);
   color: white;
-  border: none;
+  border: 1px solid rgba(255,255,255,0.4);
   border-radius: 20px;
   font-size: 0.75rem;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: background 0.2s, transform 0.1s;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.3) inset;
 }
 
-.deleteButton:hover { opacity: 0.8; }
+.deleteButton:hover {
+  background: rgba(200,50,50,0.85);
+  transform: scale(1.05);
+}
 
-/* Animations */
-@keyframes popIn {
-  0%   { transform: scale(0) rotate(-10deg); opacity: 0; }
-  70%  { transform: scale(1.15) rotate(3deg); opacity: 1; }
+/* ── Keyframes ── */
+@keyframes cloudPop {
+  0%   { transform: scale(0) rotate(-8deg); opacity: 0; }
+  65%  { transform: scale(1.12) rotate(2deg); opacity: 1; }
   100% { transform: scale(1) rotate(0deg); opacity: 1; }
 }
 
-@keyframes floatIn {
-  from { opacity: 0; transform: scale(0.5); }
-  to   { opacity: 1; transform: scale(1); }
-}
-
 @keyframes bob {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-10px); }
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
 }
