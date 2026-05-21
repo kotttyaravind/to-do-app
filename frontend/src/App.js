@@ -225,12 +225,14 @@ useEffect(() => {
   })
 }
 
-  const onMouseDown = (e, id) => {
-    e.preventDefault()
+const onMouseDown = (e, id) => {
+    if (e.type === 'mousedown') e.preventDefault()
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY
     dragging.current = {
       id,
-      startX: e.clientX - positions[id].x,
-      startY: e.clientY - positions[id].y,
+      startX: clientX - positions[id].x,
+      startY: clientY - positions[id].y,
     }
   }
 
