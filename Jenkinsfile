@@ -17,6 +17,12 @@ pipeline {
             }
         }
 
+	stage('Debug') {
+    steps {
+        sh "find . -name 'Dockerfile'"  // shows exact path of Dockerfile
+    }
+}
+
         stage('Docker Build') {
             steps {
                 script{
