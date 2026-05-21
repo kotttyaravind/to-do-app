@@ -23,6 +23,8 @@ RUN npm install
 COPY backend/index.js .
 
 COPY --from=frontend-build /frontend/build ./build
+RUN mkdir -p /app/data
+VOLUME ["/app/data"]
 
 EXPOSE 4000
 
