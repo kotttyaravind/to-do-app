@@ -164,8 +164,11 @@ useEffect(() => {
       setPositions(prev => ({
         ...prev,
         [id]: {
-          x: Math.max(0, Math.min(window.innerWidth - 300, clientX - startX)),
-          y: Math.max(70, Math.min(window.innerHeight - 200, clientY - startY)),
+          const isMobile = window.innerWidth <= 768
+const w = isMobile ? 160 : 300
+const h = isMobile ? 120 : 200
+x: Math.max(0, Math.min(window.innerWidth - w, clientX - startX)),
+y: Math.max(58, Math.min(window.innerHeight - h - 110, clientY - startY)),
         }
       }))
     }
