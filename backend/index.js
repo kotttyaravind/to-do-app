@@ -27,6 +27,9 @@ app.delete('/tasks/:id', (req,res)=>{
     res.send({})
 })
 
+app.get('*', (req, res) => {
+res.sendFile(__dirname + '/build/index.html')
+})
 
 app.listen(port, () => {
   console.log(`Todo app listening at http://localhost:${port}`)
