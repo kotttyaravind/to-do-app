@@ -239,6 +239,7 @@ body {
 
   body {
     overflow: hidden;
+    touch-action: none;
   }
 
   .title {
