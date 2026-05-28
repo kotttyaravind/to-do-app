@@ -7,7 +7,8 @@ pipeline {
         IMAGE_TAG       = "${BUILD_NUMBER}"
         GITOPS_REPO     = "github.com/kotttyaravind/todoapp-gitops.git"
         GITHUB_TOKEN    = credentials('github-token')   // Add this in Jenkins credentials
-    }
+        ARGOCD_TOKEN    = credentials('argocd-token')   // added in Jenkins
+    } 
 
     stages {
 
@@ -96,7 +97,7 @@ pipeline {
             steps {
                 sh """
                     argocd app sync todoapp-dev \
-                        --server <YOUR-VM-IP>:30343 \
+                        --server localhost:8443 \
                         --auth-token ${ARGOCD_TOKEN} \
                         --insecure
                 """
