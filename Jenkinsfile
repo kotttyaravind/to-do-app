@@ -97,7 +97,7 @@ pipeline {
             steps {
                 sh """
                     argocd app sync todoapp-dev \
-                        --server localhost:8443 \
+                        --server localhost:9999 \
                         --auth-token ${ARGOCD_TOKEN} \
                         --insecure
                 """
